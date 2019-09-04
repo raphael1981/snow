@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
     <style type="text/css">
-        div.cont#scene{
+        div.cont#scene {
             position: relative;
             width: 600px;
             height: 500px;
@@ -12,16 +13,18 @@
             margin: auto;
             overflow: hidden;
         }
-        .bomb{
+
+        .bomb {
             height: 20px;
             width: 20px;
             background: url('snowflake.svg') no-repeat;
             background-size: 20px;
             position: absolute;
         }
-        #floatdiv{
+
+        #floatdiv {
             height: 30px;
-            width:30px;
+            width: 30px;
             background: red;
             position: absolute;
             z-index: 22;
@@ -29,96 +32,95 @@
         }
     </style>
 </head>
+
 <body>
-   
+
     <div class="cont" id="scene">
-<!--        <div id="floatdiv"></div>-->
+        <!--        <div id="floatdiv"></div>-->
     </div>
-    
+
     <script>
-        
-        class Flake{
-            constructor(maxW,maxH,i) {
+        class Flake {
+            constructor(maxW, maxH, i) {
                 this.scene = document.getElementById('scene');
                 this.maxH = maxH;
-                this.left = this.getRandomInt(0,maxW);
-                this.id = 'b'+i;
+                this.left = this.getRandomInt(0, maxW);
+                this.id = 'b' + i;
             }
-            
+
             getRandomInt(min, max) {
                 min = Math.ceil(min);
                 max = Math.floor(max);
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
-            
-            create(){
+
+            create() {
                 var elb = document.createElement('div');
-                elb.setAttribute('class','bomb');
-                elb.setAttribute('data-left',this.left);
-                elb.setAttribute('data-top',0);
-                elb.setAttribute('id',this.id);
-                elb.style.left = this.left+"px";
+                elb.setAttribute('class', 'bomb');
+                elb.setAttribute('data-left', this.left);
+                elb.setAttribute('data-top', 0);
+                elb.setAttribute('id', this.id);
+                elb.style.left = this.left + "px";
                 elb.style.top = "0px";
                 this.elb = elb;
                 this.scene.appendChild(this.elb);
-                
-                this.interval = setInterval(function(){
+
+                this.interval = setInterval(function () {
                     var el = document.getElementById(this.id);
                     var newT = el.getAttribute('data-top');
-                    if(newT<this.maxH){
+                    if (newT < this.maxH) {
                         newT++;
-                        el.style.top = newT+"px";
-                        el.setAttribute('data-top',newT);
-                    }else{
+                        el.style.top = newT + "px";
+                        el.setAttribute('data-top', newT);
+                    } else {
                         el.remove();
                         clearInterval(this.interval);
+                        el.remove();
                     }
-                }.bind(this),10)
+                }.bind(this), 10)
             }
         }
-        
-        class AnimView{
-            
-            constructor(maxright,maxbottom) {
+
+        class AnimView {
+
+            constructor(maxright, maxbottom) {
                 this.maxright = maxright;
                 this.maxbottom = maxbottom;
                 this.bombs = [];
                 this.i = 0;
             }
-            
-            startAnim(){
-                this.interval = setInterval(function(){
+
+            startAnim() {
+                this.interval = setInterval(function () {
                     this.i++
                     this.makeFalke()
-                }.bind(this),700);
+                }.bind(this), 700);
             }
-            
-            makeFalke(){
+
+            makeFalke() {
                 console.log('b')
-                var b = new Flake(this.maxright,this.maxbottom,this.i);
+                var b = new Flake(this.maxright, this.maxbottom, this.i);
                 b.create();
                 this.bombs.push(b);
             }
-            
+
         }
 
 
-        var g = new AnimView(580,480);
+        var g = new AnimView(580, 480);
         g.startAnim();
 
-//    function moveDivs(event)
-//    {
-//        x=event.clientX-500;
-////        y=event.clientY-15;
-//        
-//        document.getElementById("floatdiv").style.left=x+"px";
-////        document.getElementById("floatdiv").style.top=y+"px";
-//    }
-//
-//    document.body.addEventListener('mousemove',moveDivs);
-
-    
-
+        //    function moveDivs(event)
+        //    {
+        //        x=event.clientX-500;
+        ////        y=event.clientY-15;
+        //        
+        //        document.getElementById("floatdiv").style.left=x+"px";
+        ////        document.getElementById("floatdiv").style.top=y+"px";
+        //    }
+        //
+        //    document.body.addEventListener('mousemove',moveDivs);
     </script>
 </body>
+
 </html>
